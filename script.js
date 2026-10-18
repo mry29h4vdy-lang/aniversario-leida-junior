@@ -1,51 +1,61 @@
+// ==========================================
+// POLVO DORADO
+// ==========================================
 
-document.addEventListener('DOMContentLoaded', () => {
-  // CONTADOR CONGELADO
-  document.getElementById('c-months').textContent = '10';
-  document.getElementById('c-days').textContent = '3';
-  document.getElementById('c-total').textContent = '307';
+const sparkContainer = document.getElementById('petals');
 
-  // PETALOS ANIMADOS
-  const petals = document.getElementById('petals');
-
-  if (petals && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    for (let i = 0; i < 14; i++) {
-      const petal = document.createElement('span');
-      petal.className = 'petal';
-      petal.style.left = Math.random() * 100 + '%';
-      petal.style.animationDuration = (7 + Math.random() * 9) + 's';
-      petal.style.animationDelay = (-Math.random() * 10) + 's';
-      petals.appendChild(petal);
-    }
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  for (let i = 0; i < 22; i++) {
+    const s = document.createElement('div');
+    s.className = 'spark';
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.animationDuration = (14 + Math.random() * 14) + 's';
+    s.style.animationDelay = (Math.random() * 14) + 's';
+    sparkContainer.appendChild(s);
   }
-
-  // ABRIR Y CERRAR LA CARTA
-  const envelope = document.getElementById('envelope');
-  const letter = document.getElementById('letterPaper');
-  const closeButton = document.getElementById('closeLetter');
-
-  if (!envelope || !letter) {
-    console.error('No se encuentra el sobre o la carta. Revisa los ID en index.html.');
-    return;
-  }
-
-  envelope.addEventListener('click', () => {
-    envelope.hidden = true;
-    letter.hidden = false;
-    letter.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  });
-
-  if (closeButton) {
-    closeButton.addEventListener('click', () => {
-      letter.hidden = true;
-      envelope.hidden = false;
-      envelope.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
-  }
-});
-
-
+}
 
 // ==========================================
 // CONTADOR
-// ====
+// ==========================================
+
+const startDate = new Date(2025, 11, 15); // 15 de diciembre de 2025
+
+function updateCounter() {
+  const now = new Date();
+
+  let months = (now.getFullYear() - startDate.getFullYear()) * 12
+    + (now.getMonth() - startDate.getMonth());
+
+  let days = now.getDate() - startDate.getDate();
+
+  if (days < 0) {
+    months -= 1;
+    const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+    days += prevMonth.getDate();
+  }
+
+  const totalDays = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+
+  document.getElementById('c-months').textContent = Math.max(months, 0);
+  document.getElementById('c-days').textContent = Math.max(days, 0);
+  document.getElementById('c-total').textContent = Math.max(totalDays, 0);
+}
+
+updateCounter();
+setInterval(updateCounter, 60 * 1000);
+
+// ==========================================
+// ABRIR CARTA
+// ==========================================
+
+function openLetter() {
+  document.getElementById('envelope').classList.add('hidden');
+
+  const paper = document.getElementById('letterPaper');
+  paper.classList.add('show');
+  paper.setAttribute('tabindex', '-1');
+  paper.focus({ preventScroll: true });
+
+  paper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
