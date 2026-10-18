@@ -1,197 +1,96 @@
-// ==========================================
-// PÉTALOS FLOTANTES
-// ==========================================
 
-const petalContainer =
-  document.getElementById('petals');
+/* =========================================
+   CONTADOR CONGELADO
+   No avanza con el paso del tiempo.
+========================================= */
 
-const petalChars = [
-  '❀',
-  '✿',
-  '♥'
-];
+const contadorFijo = {
+  meses: 10,
+  dias: 3,
+  total: 307
+};
 
+function updateCounter() {
+  const meses = document.getElementById('c-months');
+  const dias = document.getElementById('c-days');
+  const total = document.getElementById('c-total');
 
-if (
-  !window.matchMedia(
-    '(prefers-reduced-motion: reduce)'
-  ).matches
-) {
-
-  for (
-    let i = 0;
-    i < 14;
-    i++
-  ) {
-
-    const p =
-      document.createElement('div');
-
-    p.className =
-      'petal';
-
-    p.textContent =
-      petalChars[
-        Math.floor(
-          Math.random() *
-          petalChars.length
-        )
-      ];
-
-    p.style.left =
-      Math.random() * 100 + 'vw';
-
-    p.style.animationDuration =
-      (
-        10 +
-        Math.random() * 10
-      ) + 's';
-
-    p.style.animationDelay =
-      (
-        Math.random() * 10
-      ) + 's';
-
-    p.style.fontSize =
-      (
-        1 +
-        Math.random() * 1.2
-      ) + 'rem';
-
-    petalContainer.appendChild(p);
-  }
-
+  if (meses) meses.textContent = contadorFijo.meses;
+  if (dias) dias.textContent = contadorFijo.dias;
+  if (total) total.textContent = contadorFijo.total;
 }
 
-
-// ==========================================
-// CONTADOR
-// ==========================================
-
-const startDate =
-  new Date(
-    2025,
-    11,
-    15
-  );
-  
-// 15 de diciembre de 2025
-
-
-function updateCounter(){
-
-  const now =
-    new Date();
-
-
-  let months =
-    (
-      now.getFullYear() -
-      startDate.getFullYear()
-    ) * 12
-    +
-    (
-      now.getMonth() -
-      startDate.getMonth()
-    );
-
-
-  let days =
-    now.getDate() -
-    startDate.getDate();
-
-
-  if(days < 0){
-
-    months -= 1;
-
-    const prevMonth =
-      new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        0
-      );
-
-    days +=
-      prevMonth.getDate();
-
-  }
-
-
-  const totalDays =
-    Math.floor(
-      (
-        now -
-        startDate
-      )
-      /
-      (
-        1000 *
-        60 *
-        60 *
-        24
-      )
-    );
-
-
-  document
-    .getElementById('c-months')
-    .textContent =
-      Math.max(
-        months,
-        0
-      );
-
-
-  document
-    .getElementById('c-days')
-    .textContent =
-      Math.max(
-        days,
-        0
-      );
-
-
-  document
-    .getElementById('c-total')
-    .textContent =
-      Math.max(
-        totalDays,
-        0
-      );
-
-}
-
-
+// Se ejecuta una sola vez.
 updateCounter();
 
 
-// ==========================================
-// ABRIR CARTA
-// ==========================================
+/* =========================================
+   PETALOS FLOTANTES
+========================================= */
 
-function openLetter(){
+function createPetals() {
+  const container = document.getElementById('petals');
 
-  document
-    .getElementById('envelope')
-    .classList
-    .add('hidden');
+  if (!container) return;
+
+  // Respeta la preferencia de reducir movimiento.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+
+  for (let i = 0; i < 14; i++) {
+    const petal = document.createElement('span');
+    petal.className = 'petal';
+
+    petal.style.left = Math.random() * 100 + '%';
+    petal.style.animationDuration = (7 + Math.random() * 9) + 's';
+    petal.style.animationDelay = (-Math.random() * 12) + 's';
+    petal.style.opacity = (0.25 + Math.random() * 0.45).toString();
+    petal.style.transform = `scale(${0.6 + Math.random() * 0.8})`;
+
+    container.appendChild(petal);
+  }
+}
+
+createPetals();
 
 
-  document
-    .getElementById('letterPaper')
-    .classList
-    .add('show');
+/* =========================================
+   ABRIR Y CERRAR LA CARTA
+========================================= */
 
+const envelope = document.getElementById('envelope');
+const letterPaper = document.getElementById('letterPaper');
+const closeButton = document.getElementById('closeLetter');
 
-  document
-    .getElementById('letterPaper')
-    .scrollIntoView({
+function openLetter() {
+  if (!envelope || !letterPaper) return;
 
-      behavior:'smooth',
+  envelope.hidden = true;
+  letterPaper.hidden = false;
 
-      block:'center'
+  letterPaper.scrollIntoView({
+    behavior: 'smooth',
+    block: 'center'
+  });
+}
 
-    });
+function closeLetter() {
+  if (!envelope || !letterPaper) return;
 
+  letterPaper.hidden = true;
+  envelope.hidden = false;
+
+  envelope.scrollIntoView({
+    behavior: 'smooth',
+    block: 'center'
+  });
+}
+
+if (envelope) {
+  envelope.addEventListener('click', openLetter);
+}
+
+if (closeButton) {
+  closeButton.addEventListener('click', closeLetter);
 }
