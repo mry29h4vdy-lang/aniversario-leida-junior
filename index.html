@@ -48,24 +48,24 @@
   <div class="counter-grid">
 
     <div class="counter-item">
-      <div class="counter-num" id="c-months">9</div>
+      <div class="counter-num" id="c-months">10</div>
       <div class="counter-word">meses</div>
     </div>
 
     <div class="counter-item">
-      <div class="counter-num" id="c-days">0</div>
+      <div class="counter-num" id="c-days">9</div>
       <div class="counter-word">días</div>
     </div>
 
     <div class="counter-item">
-      <div class="counter-num" id="c-total">0</div>
+      <div class="counter-num" id="c-total">313</div>
       <div class="counter-word">días en total</div>
     </div>
 
   </div>
 
   <p class="since">
-     Desde el 15 de diciembre 2025 — este numero seguira contando mi amor 
+     Desde el 15 de diciembre 2025 — este número se quedó guardado aquí para siempre, mi amor 
   </p>
 
 </section>
@@ -423,103 +423,27 @@
 
 <div id="contador">
     <div>
-        <span id="meses">0</span> meses
-        <span id="dias">0</span> días
-        <span id="horas">0</span> horas
-        <span id="minutos">0</span> minutos
-        <span id="segundos">0</span> segundos
+        <span id="meses">10</span> meses
+        <span id="dias">9</span> días
+        <span id="horas">22</span> horas
+        <span id="minutos">59</span> minutos
+        <span id="segundos">10</span> segundos
     </div>
 
     <p>
         ❤️ Total de horas juntos:
-        <strong id="horasTotales">0</strong>
+        <strong id="horasTotales">7534.99</strong>
     </p>
 </div>
 
 <script>
-    const inicio = new Date("2025-12-15T00:00:00");
-
-    function actualizarContador() {
-
-        const ahora = new Date();
-
-        // Diferencia total en milisegundos
-        const diferenciaTotal = ahora - inicio;
-
-        // =========================
-        // HORAS TOTALES
-        // =========================
-        const horasTotales =
-            diferenciaTotal / (1000 * 60 * 60);
-
-        document.getElementById("horasTotales").textContent =
-            horasTotales.toFixed(2);
-
-        // =========================
-        // MESES
-        // =========================
-        let meses =
-            (ahora.getFullYear() - inicio.getFullYear()) * 12 +
-            (ahora.getMonth() - inicio.getMonth());
-
-        if (ahora.getDate() < inicio.getDate()) {
-            meses--;
-        }
-
-        // Fecha después de los meses completos
-        const fechaMeses = new Date(inicio);
-        fechaMeses.setMonth(fechaMeses.getMonth() + meses);
-
-        // Tiempo restante
-        let diferencia = ahora - fechaMeses;
-
-        // =========================
-        // DÍAS
-        // =========================
-        const dias = Math.floor(
-            diferencia / (1000 * 60 * 60 * 24)
-        );
-
-        diferencia %= (1000 * 60 * 60 * 24);
-
-        // =========================
-        // HORAS
-        // =========================
-        const horas = Math.floor(
-            diferencia / (1000 * 60 * 60)
-        );
-
-        diferencia %= (1000 * 60 * 60);
-
-        // =========================
-        // MINUTOS
-        // =========================
-        const minutos = Math.floor(
-            diferencia / (1000 * 60)
-        );
-
-        diferencia %= (1000 * 60);
-
-        // =========================
-        // SEGUNDOS
-        // =========================
-        const segundos = Math.floor(
-            diferencia / 1000
-        );
-
-        // Mostrar resultados
-        document.getElementById("meses").textContent = meses;
-        document.getElementById("dias").textContent = dias;
-        document.getElementById("horas").textContent = horas;
-        document.getElementById("minutos").textContent = minutos;
-        document.getElementById("segundos").textContent = segundos;
-    }
-
-    // Ejecutar inmediatamente
-    actualizarContador();
-
-    // Actualizar cada segundo
-    setInterval(actualizarContador, 1000);
+    // CONTADOR EN PAUSA: congelado en 10 meses, 9 días, 22 horas, 59 minutos, 10 segundos
+    document.getElementById("meses").textContent = 10;
+    document.getElementById("dias").textContent = 9;
+    document.getElementById("horas").textContent = 22;
+    document.getElementById("minutos").textContent = 59;
+    document.getElementById("segundos").textContent = 10;
+    document.getElementById("horasTotales").textContent = "7534.99";
 </script>
 
   </div>
