@@ -16,34 +16,14 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 }
 
 // ==========================================
-// CONTADOR
+// CONTADOR (EN PAUSA)
+// Congelado en: 10 meses, 9 días, 313 días en total
+// (los números ya están escritos en el HTML; no se actualizan más)
 // ==========================================
 
-const startDate = new Date(2025, 11, 15); // 15 de diciembre de 2025
-
-function updateCounter() {
-  const now = new Date();
-
-  let months = (now.getFullYear() - startDate.getFullYear()) * 12
-    + (now.getMonth() - startDate.getMonth());
-
-  let days = now.getDate() - startDate.getDate();
-
-  if (days < 0) {
-    months -= 1;
-    const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
-    days += prevMonth.getDate();
-  }
-
-  const totalDays = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
-
-  document.getElementById('c-months').textContent = Math.max(months, 0);
-  document.getElementById('c-days').textContent = Math.max(days, 0);
-  document.getElementById('c-total').textContent = Math.max(totalDays, 0);
-}
-
-updateCounter();
-setInterval(updateCounter, 60 * 1000);
+document.getElementById('c-months').textContent = 10;
+document.getElementById('c-days').textContent = 9;
+document.getElementById('c-total').textContent = 313;
 
 // ==========================================
 // ABRIR CARTA
